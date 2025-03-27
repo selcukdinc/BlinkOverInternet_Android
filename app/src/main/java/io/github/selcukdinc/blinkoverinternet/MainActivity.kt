@@ -66,13 +66,9 @@ fun LEDControlScreen(webSocketManager: WebSocketManager,
     var localLed by remember { mutableStateOf("LED_OFF") }
     var localLedBool by remember { mutableStateOf(false) } // Butonların Aktif olup olmamasını
     var btnBgColor by remember { mutableStateOf(Color.Red) }
-    fun updateLedString(){
-//        if (webSocketManager.getLEDStatus() == "LED_ON_AND") {
-//            localLed = "LED Açık"
-//        }else if(webSocketManager.getLEDStatus() == "LED_OFF_AND"){
-//            localLed = "LED Kapalı"
-//        }
-    }
+
+
+
 
     LaunchedEffect (webSocketManager.ledStatus){
         if (webSocketManager.getLEDStatus() == "LED_ON_AND") {
@@ -87,7 +83,12 @@ fun LEDControlScreen(webSocketManager: WebSocketManager,
         }
     }
 
+    LaunchedEffect(webSocketManager.sensorData) {
+
+    }
+
     // UI bileşenleri ile LED durumunu göster
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -95,6 +96,7 @@ fun LEDControlScreen(webSocketManager: WebSocketManager,
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        Text(text = "Sensor Data: ${webSocketManager.sensorData}")
         Button(
             onClick = {
                 if(localLedBool){
